@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * @vi.js these our routes and they're corresponding functions.
+ * @vi.js these are our routes and they're corresponding functions.
  * @author Nicholas Carignon
- * @Becky Peterson
+ * @author Becky Peterson
  * 
  * requires cors
  * requires dotenv
@@ -44,6 +44,7 @@ router.param('model', modelFinder);
 /**
  * These are our 5 app routes.
  */
+//Becky - first step for authorizing app.get route: could update this first line of code to include auth() as the second paramenter. The third parameter would need to be replaced with (req, res, next), where next would need to point to handleGetAll as the next function. Not sure how to implement.
 router.get('/api/v1/:model', handleGetAll);
 router.post('/api/v1/:model', handlePost);
 

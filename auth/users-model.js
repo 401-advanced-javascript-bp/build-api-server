@@ -18,32 +18,39 @@ const users = new mongoose.Schema({
   username: {type:String, required:true, unique:true},
   password: {type:String, required:true},
   email: {type: String},
-  // roles: {type: String, default:'user', enum: ['admin','editor','user']},
-  role: { type:String, required: true, ref: 'roles' },
-    // editor: { type: mongoose.Schema.Types.ObjectId, ref: 'Editor' },
-    // user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
-
-//Becky - Are these supposed to be nested? I could try nesting into two more schemas, but am not sure thats accurate
+  //Becky - using hard-coded permissions for now
+  roles: {type: String, default:'user', enum: ['admin','editor','user']},
+  //Becky - commenting out and using hard coded permissions, just to verify middleware is working as intended
+  // role: { type:String, required: true, ref: 'roles' },
 
 });
-const roles = new mongoose.Schema({
-  role: {type:String, required: true, enum: ['admin', 'editor', 'user'], ref: 'capabilities' },
-});
 
+const capabilities = {
+  admin:  ['create', 'read', 'update', 'delete'],
+  editor: ['create', 'read', 'update'],
+  user:   [ 'read'],
+};
+//Becky - Are these below supposed to be nested? I could try nesting into two more schemas, but am not sure thats accurate
+
+//Becky - commenting out and using hard coded permissions, just to verify middleware is working as intended
+// const roles = new mongoose.Schema({
+//   role: {type:String, required: true, enum: ['admin', 'editor', 'user'], ref: 'capabilities' },
+// });
+//Becky - for reference, don't use
 // const roles = new mongoose.Schema({
 //   role: {type:String, required: true, unique:true },
 //   capabilities: {type: Array, required:true }
 // });
+//Becky - commenting out and using hard coded permissions, just to verify middleware is working as intended
+// const capabilities = mongoose.Schema ({
+//   admin: { type:Array, required: true, permissions: ['create','read','update','delete']},
+//   editor: { type:Array, required: true, permissions: ['create', 'read', 'update'] },
+//   user:  { type:Array, required: true, permissions: ['read'] },
+// });
+//Becky - commenting out and using hard coded permissions, just to verify middleware is working as intended
+// const permissions = mongoose.Schema({
 
-const capabilities = mongoose.Schema ({
-  admin: { type:Array, required: true, permissions: ['create','read','update','delete']},
-  editor: { type:Array, required: true, permissions: ['create', 'read', 'update'] },
-  user:  { type:Array, required: true, permissions: ['read'] }
-});
-
-const permissions = mongoose.Schema({
-
-})
+// })
 
 users.pre('save', function(next) {
   bcrypt.hash(this.password, 10)

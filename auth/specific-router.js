@@ -20,6 +20,13 @@ specificAuthRouter.get('/public-stuff', (req, res, next) => {
     .catch(next);
 });
 
+//Becky - router.get('/public-stuff') should be visible by anyone
+specificAuthRouter.get('/public-stuff', (req, res, next) => {
+  // res.status(200).send(token)
+  res.status(200).send('hello')
+    .catch(next);
+});
+
 //router.get('/hidden-stuff') should require only a valid login
 //verify
 specificAuthRouter.get('/hidden-stuff', auth(), (req, res, next) => {
