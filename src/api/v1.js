@@ -34,8 +34,14 @@ const modelFinder = require(`${cwd}/src/middleware/model-finder.js`);
 
 const router = express.Router();
 
+const auth = require('../../auth/middleware.js');
+
+const model = require('../models/mongo-model');
+const mongoModel = new model();
 
 // Evaluate the model, dynamically
+//Becky - what does this do?
+//lookup express and .param
 router.param('model', modelFinder);
 
 
@@ -44,7 +50,24 @@ router.param('model', modelFinder);
 /**
  * These are our 5 app routes.
  */
-//Becky - first step for authorizing app.get route: could update this first line of code to include auth() as the second paramenter. The third parameter would need to be replaced with (req, res, next), where next would need to point to handleGetAll as the next function. Not sure how to implement.
+//Becky - first step for authorizing app.get route: could update this first line of code to include auth() as the second parameter. The third parameter would need to be replaced with (req, res, next), where next would need to point to handleGetAll as the next function. Not sure how to implement.
+
+
+// // Demo endpoint to show that our method is working...
+// router.get('/hi', function handleGetAll(request,response,next) {
+//   console.log('handleGetAll is firing');
+//   console.log(mongoModel)
+//   mongoModel.get()
+//     .then( data => {
+//       const output = {
+//         count: data.length,
+//         results: data,
+//       };
+//       response.status(200).json(output);
+//     })
+//     .catch( next );
+// });
+//start here
 router.get('/api/v1/:model', handleGetAll);
 router.post('/api/v1/:model', handlePost);
 
@@ -60,6 +83,7 @@ router.delete('/api/v1/:model/:id', handleDelete);
  * @param {function} next is a function
  */
 function handleGetAll(request,response,next) {
+  console.log('handleGetAll is firing');
   request.model.get()
     .then( data => {
       const output = {

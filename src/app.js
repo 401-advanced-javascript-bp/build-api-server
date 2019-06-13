@@ -5,11 +5,14 @@
  * @module src/app
  */
 
+ //current working directory
 const cwd = process.cwd();
 
 // 3rd Party Resources
 const express = require('express');
 const cors = require('cors');
+
+//logging activity on your server; middleware
 const morgan = require('morgan');
 
 // Esoteric Resources
@@ -25,8 +28,8 @@ app.use('/doc', express.static('docs'));
 app.use(cors());
 app.use(morgan('dev'));
 
-app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.json()); //parses json data so that we can use it
+app.use(express.urlencoded({extended:true})); //makes encoded data available for us to use
 
 // Routes
 app.use(v1Router);
