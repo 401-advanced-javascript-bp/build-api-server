@@ -6,7 +6,7 @@ module.exports = (capability) => {
   //Becky via Vinicio - this is going to be curried middleware now
   //Becky a curried function is a function that returns a function
   return (req, res, next) => {
-
+    console.log('Auth middleware firing');
     try {
       console.log('this is req.headers', req.headers);
       let [authType, authString] = req.headers.authorization.split(/\s+/);
